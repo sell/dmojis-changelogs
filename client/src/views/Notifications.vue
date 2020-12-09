@@ -7,10 +7,10 @@
       <v-alert
         v-if="error || message"
         border="left"
-        color="red"
+        :color="error ? 'red' : 'green' "
         dismissible
         elevation="6"
-        :type="error ? 'error' : 'success'"
+        :type="error ? 'error' : 'success' "
       >{{ error || message }}</v-alert>
       <form style="width: 50%">
         <v-text-field
@@ -127,12 +127,12 @@ export default {
       if (this.emailErrors.length >= 1 || this.nameErrors.length >= 1 || this.checkboxErrors.length >= 1) return;
       this.loading = true;
       try {
-        const data = await api.Post({ name: this.name, email: this.email },'forms/suggestion');
+        const data = await api.Post({ name: this.name, email: this.email },'forms/notifications');
         this.loading = false;
         this.message = data.message;
       } catch (e) {
         this.loading = false;
-        this.error = 'Something happened, try again later.';
+        this.error = e.response.error || 'Something happened, try again later.';
       }
     },
     clear () {

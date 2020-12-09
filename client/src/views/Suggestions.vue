@@ -7,7 +7,7 @@
       <v-alert
         v-if="error || message"
         border="left"
-        color="red"
+        :color="error ? 'red' : 'green'"
         dismissible
         elevation="6"
         :type="error ? 'error' : 'success'"
@@ -153,7 +153,7 @@ export default {
         this.message = data.message;
       } catch (e) {
         this.loading = false;
-        this.error = 'Something happened, try again later.';
+        this.error = e.response.error || 'Something happened, try again later.';
       }
     },
     clear () {
