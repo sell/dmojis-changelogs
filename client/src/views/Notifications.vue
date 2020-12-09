@@ -44,20 +44,26 @@
           @change="$v.checkbox.$touch()"
           @blur="$v.checkbox.$touch()"
         ></v-checkbox>
-        <v-btn :disabled="!!loading"
-               class="mr-4"
-               @click="submit"
-        >
-          <v-progress-circular
-            v-if="loading"
-            indeterminate
-            color="rgba(255, 255, 255, 0.3)"
-            style="height: 12px; margin-right: 5px; margin-left: 0; width: 12px;"
-          ></v-progress-circular> submit
-        </v-btn>
-        <v-btn :disabled="!!loading" @click="clear">
-          clear
-        </v-btn>
+        <div style="display: flex;">
+          <vue-recaptcha
+            size="invisible"
+            @verify="submit"
+            sitekey="6LeUPf8ZAAAAAB5xjN_eN668I8TljIoRGggJeTeK">
+            <v-btn :disabled="!!loading"
+                   class="mr-4"
+            >
+              <v-progress-circular
+                v-if="loading"
+                indeterminate
+                color="rgba(255, 255, 255, 0.3)"
+                style="height: 12px; margin-right: 5px; margin-left: 0; width: 12px;"
+              ></v-progress-circular> submit
+            </v-btn>
+          </vue-recaptcha>
+          <v-btn :disabled="!!loading" @click="clear">
+            clear
+          </v-btn>
+        </div>
       </form>
     </v-layout>
   </v-container>
@@ -69,11 +75,14 @@ import Backend from '@/utils/AxiosMethod';
 import {
   required, maxLength, email, minLength,
 } from 'vuelidate/lib/validators';
+import VueRecaptcha from 'vue-recaptcha';
 
 const api = new Backend();
 /* eslint-disable */
 export default {
   mixins: [validationMixin],
+
+  components: { VueRecaptcha },
 
   validations: {
     name: { required, maxLength: maxLength(10) },
