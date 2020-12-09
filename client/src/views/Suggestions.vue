@@ -153,7 +153,6 @@ export default {
         this.message = data.message;
       } catch (e) {
         this.loading = false;
-        console.log(e);
         this.error = e.response && e.response.error || 'Something happened, try again later.';
       }
     },
